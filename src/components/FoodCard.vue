@@ -60,7 +60,7 @@ const getTasteColor = (taste) => {
                 {{ props.description }}
             </p>
 
-            <div v-if="props.tastes.length > 0" class="flex flex-wrap gap-2 mb-4">
+            <div v-if="props.tastes.length > 0" class="flex flex-wrap gap-2">
                 <span v-for="taste in props.tastes" :key="taste"
                     :class="[getTasteColor(taste), 'px-3 py-1 text-xs font-medium rounded-full border']">
                     {{ taste }}
