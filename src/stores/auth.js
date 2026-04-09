@@ -15,7 +15,24 @@ export const useAuthStore = defineStore('auth', () => {
       const res = await signInWithEmailAndPassword(auth, email, password)
       user.value = res.user
     } catch (err) {
-      error.value = err.message
+      switch (err.code) {
+        case 'auth/invalid-credential':
+        case 'auth/user-not-found':
+        case 'auth/wrong-password':
+          error.value = 'Email atau password yang Anda masukkan salah.'
+          break
+        case 'auth/invalid-email':
+          error.value = 'Format email tidak valid.'
+          break
+        case 'auth/too-many-requests':
+          error.value = 'Terlalu banyak percobaan gagal. Tunggu sebentar lalu coba lagi.'
+          break
+        case 'auth/network-request-failed':
+          error.value = 'Koneksi terputus. Pastikan internet Anda stabil.'
+          break
+        default:
+          error.value = 'Terjadi kesalahan pada sistem. Silakan coba lagi.'
+      }
     } finally {
       loading.value = false
     }
