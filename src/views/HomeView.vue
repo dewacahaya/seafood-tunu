@@ -1,11 +1,13 @@
 <script setup>
+import CustomerLayout from '@/layouts/CustomerLayout.vue';
+
 
 </script>
 
 <template>
-    <div class="text-3xl">
+    <CustomerLayout class="text-3xl">
         Halaman Utama Kosongan
-    </div>
+    </CustomerLayout>
 </template>
 
 <style scoped></style>
