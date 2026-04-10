@@ -1,3 +1,31 @@
+<script setup>
+import { RouterLink } from 'vue-router'
+import { useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
+
+const authStore = useAuthStore()
+const router = useRouter()
+
+defineProps({
+    pageTitle: {
+        type: String,
+        default: 'Admin Panel'
+    }
+})
+
+const handleLogout = async () => {
+    const confirmed = window.confirm('Apakah Anda yakin ingin keluar?')
+    if (confirmed === true) {
+        try {
+            await authStore.logout()
+            router.push('/')
+        } catch (error) {
+            console.error('Logout error:', error)
+        }
+    }
+}
+</script>
+
 <template>
     <div class="min-h-screen flex bg-gray-100 font-sans">
 
@@ -43,30 +71,3 @@
 
     </div>
 </template>
-
-<script setup>
-import { RouterLink } from 'vue-router'
-import { useRouter } from 'vue-router'
-import { useAuthStore } from '@/stores/auth'
-
-const authStore = useAuthStore()
-const router = useRouter()
-
-// Menerima props untuk judul halaman (opsional, agar header dinamis)
-defineProps({
-    pageTitle: {
-        type: String,
-        default: 'Admin Panel'
-    }
-})
-
-// TUGAS BACKEND: Fungsi logout Firebase nantinya dipanggil di sini
-const handleLogout = async () => {
-    try {
-        await authStore.logout()
-        router.push('/')
-    } catch (error) {
-        console.error('Logout error:', error)
-    }
-}
-</script>
