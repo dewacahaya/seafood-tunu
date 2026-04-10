@@ -45,6 +45,12 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useAuthStore } from '../stores/auth'
+
+const router = useRouter()
+const authStore = useAuthStore()
+
 
 // TUGAS FRONTEND: Menyiapkan wadah data (State UI)
 const email = ref('')
@@ -54,6 +60,12 @@ const isLoading = ref(false)
 
 // WADAH UNTUK BACKEND: Fungsi ini dipicu saat form disubmit
 const handleLogin = async () => {
-    // Kosong untuk dikerjakan oleh partner Backend
+    await authStore.login(email.value, password.value)
+
+    if (!authStore.error && authStore.user) {
+        router.push('/admin')
+    } else {
+        errorMessage.value = "Gagal Login: " + authStore.error
+    }
 }
 </script>
