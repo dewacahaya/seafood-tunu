@@ -63,7 +63,7 @@ const handleLogin = async () => {
     await authStore.login(email.value, password.value)
 
     if (!authStore.error && authStore.user) {
-        router.push('/admin')
+        router.push('/admin/dashboard')
     } else {
         errorMessage.value = "Gagal Login: " + authStore.error
     }
