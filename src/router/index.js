@@ -23,25 +23,37 @@ const router = createRouter({
       name: 'admin',
       component: AdminView,
       meta: { requiresAuth: true }
+    },
+    {
+      path: '/admin/dashboard',
+      name: 'admin-dashboard',
+      component: DashboardView,
+    },
+    {
+      path: '/admin/menu',
+      name: 'admin-menu',
+      component: MenuView,
     }
   ],
 })
 
 import { useAuthStore } from '../stores/auth'
+import DashboardView from '@/views/Admin/DashboardView.vue'
+import MenuView from '@/views/Admin/MenuView.vue'
 
 router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore()
-  await authStore.initUser() 
+  await authStore.initUser()
   const isAuthenticated = authStore.user !== null
 
   if (to.meta.requiresAuth && !isAuthenticated) {
     next('/login')
-  } 
+  }
   else if (to.meta.requiresGuest && isAuthenticated) {
-    next('/admin') 
-  } 
+    next('/admin')
+  }
   else {
-    next() 
+    next()
   }
 })
 
