@@ -1,8 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { useAuthStore } from '../stores/auth'
+import DashboardView from '@/views/Admin/DashboardView.vue'
+import MenuView from '@/views/Admin/MenuView.vue'
 import HomeView from '../views/HomeView.vue'
 import LoginView from '@/views/LoginView.vue'
-import AdminView from '../views/AdminView.vue'
-import AdminLayout from '@/layouts/AdminLayout.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -19,27 +20,19 @@ const router = createRouter({
       meta: { requiresGuest: true }
     },
     {
-      path: '/admin',
-      name: 'admin',
-      component: AdminView,
-      meta: { requiresAuth: true }
-    },
-    {
       path: '/admin/dashboard',
       name: 'admin-dashboard',
       component: DashboardView,
+      meta: { requiresAuth: true }
     },
     {
       path: '/admin/menu',
       name: 'admin-menu',
       component: MenuView,
+      meta: { requiresAuth: true }
     }
   ],
 })
-
-import { useAuthStore } from '../stores/auth'
-import DashboardView from '@/views/Admin/DashboardView.vue'
-import MenuView from '@/views/Admin/MenuView.vue'
 
 router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore()
@@ -50,7 +43,7 @@ router.beforeEach(async (to, from, next) => {
     next('/login')
   }
   else if (to.meta.requiresGuest && isAuthenticated) {
-    next('/admin')
+    next('/admin/dashboard')
   }
   else {
     next()

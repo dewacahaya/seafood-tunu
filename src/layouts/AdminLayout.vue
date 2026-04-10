@@ -46,6 +46,11 @@
 
 <script setup>
 import { RouterLink } from 'vue-router'
+import { useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/auth'
+
+const authStore = useAuthStore()
+const router = useRouter()
 
 // Menerima props untuk judul halaman (opsional, agar header dinamis)
 defineProps({
@@ -56,7 +61,12 @@ defineProps({
 })
 
 // TUGAS BACKEND: Fungsi logout Firebase nantinya dipanggil di sini
-const handleLogout = () => {
-    console.log("Proses logout dijalankan...")
+const handleLogout = async () => {
+    try {
+        await authStore.logout()
+        router.push('/')
+    } catch (error) {
+        console.error('Logout error:', error)
+    }
 }
 </script>
