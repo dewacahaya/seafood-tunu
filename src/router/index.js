@@ -32,6 +32,13 @@ const router = createRouter({
       meta: { requiresAuth: true }
     }
   ],
+  scrollBehavior(to) {
+    if (to.hash) {
+      const topOffset = document.querySelector('nav')?.offsetHeight || 72;
+      return { el: to.hash, top: topOffset + 8, behavior: 'smooth' };
+    }
+    return { top: 0 };
+  }
 })
 
 router.beforeEach(async (to, from, next) => {
