@@ -4,6 +4,7 @@ import DashboardView from '@/views/Admin/DashboardView.vue'
 import MenuView from '@/views/Admin/MenuView.vue'
 import HomeView from '../views/HomeView.vue'
 import LoginView from '@/views/LoginView.vue'
+import MenuDetailView from '@/views/MenuDetailView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -18,6 +19,11 @@ const router = createRouter({
       name: 'login',
       component: LoginView,
       meta: { requiresGuest: true }
+    },
+    {
+      path: '/menu/:id',
+      name: 'menu',
+      component: MenuDetailView
     },
     {
       path: '/admin/dashboard',

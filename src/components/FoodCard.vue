@@ -3,6 +3,10 @@ import { computed } from 'vue';
 import BaseButton from './BaseButton.vue';
 
 const props = defineProps({
+    id: {
+        type: [Number, String],
+        required: true
+    },
     imageUrl: {
         type: String,
         required: true,
